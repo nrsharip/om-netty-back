@@ -11,7 +11,6 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
 public class HttpServer {
-
     private int port;
     private static Logger logger = LoggerFactory.getLogger(HttpServer.class);
 
@@ -31,8 +30,8 @@ public class HttpServer {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
-            ServerBootstrap b = new ServerBootstrap();
-            b.group(bossGroup, workerGroup)
+            ServerBootstrap bootstrap = new ServerBootstrap();
+            bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
@@ -45,7 +44,7 @@ public class HttpServer {
                         }
                     });
 
-            ChannelFuture f = b.bind(port).sync();
+            ChannelFuture f = bootstrap.bind(port).sync();
             f.channel().closeFuture().sync();
         } finally {
             workerGroup.shutdownGracefully();
