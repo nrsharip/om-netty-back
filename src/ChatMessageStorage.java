@@ -12,7 +12,7 @@ public class ChatMessageStorage {
     public List<ChatMessage> getMessages(long millis) {
         return messages.stream()
                 .filter(m -> m.millis >= millis)
-                .sorted(Comparator.comparingLong(m -> m.millis))
+                .sorted((m1, m2) -> Long.compare(m2.millis, m1.millis))
                 .collect(Collectors.toList());
     }
 

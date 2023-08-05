@@ -51,9 +51,11 @@ public class RequestProcessor {
 
                 break;
             case "POST":
-                ChatMessageStorage.INSTANCE.addMessage(
-                        RequestProcessor.content.toString(CharsetUtil.UTF_8)
-                );
+                if (RequestProcessor.content != null) {
+                    ChatMessageStorage.INSTANCE.addMessage(
+                            RequestProcessor.content.toString(CharsetUtil.UTF_8)
+                    );
+                }
                 break;
         }
 
