@@ -21,7 +21,7 @@ public class HttpServer {
 
     // main method, same as simple protocol server
     public static void main(String[] args) throws Exception {
-        int port = args.length > 0 ? Integer.parseInt(args[0]) : 8080;
+        int port = args.length > 0 ? Integer.parseInt(args[0]) : 3000;
 
         new HttpServer(port).run();
     }

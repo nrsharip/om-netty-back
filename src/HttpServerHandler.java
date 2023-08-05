@@ -81,6 +81,10 @@ public class HttpServerHandler extends SimpleChannelInboundHandler {
                 HttpHeaderNames.CONTENT_TYPE,
                 "text/plain; charset=UTF-8");
 
+        httpResponse.headers().set(
+                HttpHeaderNames.ACCESS_CONTROL_ALLOW_ORIGIN,
+                "*");
+
         if (keepAlive) {
             httpResponse.headers().setInt(
                     HttpHeaderNames.CONTENT_LENGTH,
