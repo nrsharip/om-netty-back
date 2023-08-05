@@ -1,5 +1,3 @@
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -24,8 +22,6 @@ public class CustomHttpServerHandler extends SimpleChannelInboundHandler {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) {
 
-        System.out.println("1");
-
         if (msg instanceof HttpRequest) {
 
             HttpRequest request = this.request = (HttpRequest) msg;
@@ -35,29 +31,22 @@ public class CustomHttpServerHandler extends SimpleChannelInboundHandler {
             }
 
             responseData.setLength(0);
-            responseData.append(RequestUtils.formatParams(request));
+
+            RequestProcessor.checkParams(request);
         }
-
-        // responseData.append(RequestUtils.evaluateDecoderResult(request));
-
-        System.out.println("2");
 
         if (msg instanceof HttpContent) {
 
             HttpContent httpContent = (HttpContent) msg;
 
-            responseData.append(RequestUtils.formatBody(httpContent));
-
-            System.out.println("5");
-
-            // responseData.append(RequestUtils.evaluateDecoderResult(request));
+            RequestProcessor.checkBody(httpContent);
 
             if (msg instanceof LastHttpContent) {
 
-                System.out.println("6");
-
                 LastHttpContent trailer = (LastHttpContent) msg;
-                responseData.append(RequestUtils.prepareLastResponse(request, trailer));
+
+                responseData.append(RequestProcessor.finalize(trailer));
+
                 writeResponse(ctx, trailer, responseData);
             }
         }
@@ -72,8 +61,6 @@ public class CustomHttpServerHandler extends SimpleChannelInboundHandler {
 
     private void writeResponse(ChannelHandlerContext ctx) {
 
-        System.out.println("3");
-
         FullHttpResponse response = new DefaultFullHttpResponse(
                 HTTP_1_1, CONTINUE, Unpooled.EMPTY_BUFFER);
 
@@ -84,8 +71,6 @@ public class CustomHttpServerHandler extends SimpleChannelInboundHandler {
                                StringBuilder responseData) {
 
         boolean keepAlive = HttpUtil.isKeepAlive(request);
-
-        System.out.println("4");
 
         FullHttpResponse httpResponse = new DefaultFullHttpResponse(
                 HTTP_1_1,

@@ -1,5 +1,3 @@
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.codec.http.HttpRequest;
@@ -66,8 +64,6 @@ public class RequestUtils {
     static StringBuilder prepareLastResponse(HttpRequest request, LastHttpContent trailer) {
 
         StringBuilder responseData = new StringBuilder();
-
-        responseData.append("Good Bye!\r\n");
 
         if (!trailer.trailingHeaders().isEmpty()) {
 
