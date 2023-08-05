@@ -25,23 +25,37 @@ public class RequestProcessor {
         System.out.println("params: " + RequestProcessor.params);
     }
 
-    static StringBuilder checkBody(HttpContent httpContent) {
+    static void checkBody(HttpContent httpContent) {
 
-        RequestProcessor.content = httpContent.content();
+        if (httpContent.content().isReadable()) {
 
-        if (content.isReadable()) {
+            RequestProcessor.content = httpContent.content();
 
             System.out.println("content: " + RequestProcessor.content.toString(CharsetUtil.UTF_8));
 
-            RequestProcessor.response
-                    .append(RequestProcessor.content.toString(CharsetUtil.UTF_8).toUpperCase())
-                    .append("\r\n");
         }
 
-        return RequestProcessor.response;
     }
 
     static StringBuilder finalize(LastHttpContent trailer) {
+
+        switch (RequestProcessor.method.name()) {
+            case "GET":
+                long millis = RequestProcessor.params.containsKey("millis") ?
+                        Long.parseLong(RequestProcessor.params.get("millis").get(0)) : 0;
+
+                RequestProcessor.response
+                        .append("{ \"items\": ")
+                        .append(ChatMessageStorage.INSTANCE.getMessages(millis))
+                        .append(" }");
+
+                break;
+            case "POST":
+                ChatMessageStorage.INSTANCE.addMessage(
+                        RequestProcessor.content.toString(CharsetUtil.UTF_8)
+                );
+                break;
+        }
 
         RequestProcessor.request = null;
         RequestProcessor.method = null;
