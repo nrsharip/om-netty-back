@@ -21,8 +21,8 @@ public class RequestProcessor {
         RequestProcessor.params = queryStringDecoder.parameters();
         RequestProcessor.response.setLength(0);
 
-        System.out.println("method: " + RequestProcessor.method);
-        System.out.println("params: " + RequestProcessor.params);
+        // System.out.println("method: " + RequestProcessor.method);
+        // System.out.println("params: " + RequestProcessor.params);
     }
 
     static void checkBody(HttpContent httpContent) {
