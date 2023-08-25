@@ -1,6 +1,6 @@
 # Демонстрация
 
-https://nrsharip.github.io/overmobile-phaser-front/
+https://nrsharip.github.io/om-phaser-front/
 
 # Скриншоты
 
@@ -11,12 +11,12 @@ https://nrsharip.github.io/overmobile-phaser-front/
 1. Клонировать Frontend
 
    ```
-   git clone https://github.com/nrsharip/overmobile-phaser-front.git
+   git clone https://github.com/nrsharip/om-phaser-front.git
    ```
 2. Клонировать Backend
 
    ```
-   git clone https://github.com/nrsharip/overmobile-netty-back.git
+   git clone https://github.com/nrsharip/om-netty-back.git
    ```
 3. Запустить Backend в IntelliJ IDEA
 
@@ -41,13 +41,11 @@ https://nrsharip.github.io/overmobile-phaser-front/
 
 8. (2я вкладка в браузере) Либо запустить демо с Github Pages
 
-   https://nrsharip.github.io/overmobile-phaser-front/
+   https://nrsharip.github.io/om-phaser-front/
 
 9. Написать сообщения в чат
 
 10. Нажать 'Новый бой' после завершения игры
-
-![инструкции](docs/run-2.gif)
 
 # Игровые ресурсы
 
